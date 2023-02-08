@@ -16,6 +16,8 @@ const DIRNAME = path.dirname(fileURLToPath(import.meta.url))
 const TMP = path.join(DIRNAME, '.tmp')
 const BENCH_IMGS = path.join(DIRNAME, '../static/img/benchmarks')
 
+console.log(TMP);
+
 const { stripIndents } = commonTags
 const LIMIT_RUNS = 30
 
@@ -127,13 +129,13 @@ run()
   .catch(err => console.error(err))
 
 async function run () {
-  const managersDir = path.join(tempy.directory(), 'managers')
-  await Promise.allSettled([
-    promisify(rimraf)(TMP),
-    // make sure folder exists
-    fs.promises.mkdir(managersDir, { recursive: true }),
-    fs.promises.mkdir(BENCH_IMGS, { recursive: true }),
-  ])
+  const managersDir = path.join(`/private/var/folders/s4/bxmm64nj7450d0997f1s3kb00000gn/`, 'managers')
+  // await Promise.allSettled([
+  //   promisify(rimraf)(TMP, {}),
+  //   // make sure folder exists
+  //   fs.promises.mkdir(managersDir, { recursive: true }),
+  //   fs.promises.mkdir(BENCH_IMGS, { recursive: true }),
+  // ])
   spawn.sync('pnpm', ['init', '--yes'], { cwd: managersDir })
   spawn.sync('pnpm', ['add', 'yarn@latest', 'npm@latest', 'pnpm@latest'], { cwd: managersDir, stdio: 'inherit' })
   await installYarnBerryLikeModule(managersDir)
